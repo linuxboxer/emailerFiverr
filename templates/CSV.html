@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+	<head>
+        <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Email Sender by faziprodesigner@fiverr</title>
+
+		<style>
+			* {
+				margin: 0px;
+				padding: 0px;
+			}
+			body{
+				background-color: #f2f2f2;
+
+			}
+		button {
+			font-size: small;
+			color: #ffffff;
+			background-color: #2d63c8;
+			font-size: 19px;
+			border: 1px solid #2d63c8;
+			padding: 15px 50px;
+			cursor: pointer
+		}
+		
+		button:hover {
+			color: #2d63c8;
+			background-color: #ffffff;
+		}
+
+		#left{
+			background-color:#336cd7;
+		}
+
+
+
+	
+
+
+
+.container {
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+h2 {
+  font-size: 26px;
+  text-align: center;
+}
+h2 small {
+  font-size: 0.5em;
+}
+
+.responsive-table li {
+  border-radius: 3px;
+  padding: 25px 30px;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 25px;
+}
+.responsive-table .table-header {
+  background-color: #95A5A6;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+.responsive-table .table-row {
+  background-color: #ffffff;
+  box-shadow: 0px 0px 9px 0px rgba(0, 0, 0, 0.1);
+}
+.responsive-table .col-1 {
+  flex-basis: 10%;
+}
+.responsive-table .col-2 {
+  flex-basis: 40%;
+}
+.responsive-table .col-3 {
+  flex-basis: 25%;
+}
+.responsive-table .col-4 {
+  flex-basis: 25%;
+}
+@media all and (max-width: 767px) {
+  .responsive-table .table-header {
+    display: none;
+  }
+  .responsive-table li {
+    display: block;
+  }
+  .responsive-table .col {
+    flex-basis: 100%;
+  }
+  .responsive-table .col {
+    /*display: flex;*/
+    padding: 10px 0;
+  }
+  .responsive-table .col:before {
+    color: #6C7A89;
+    padding-right: 10px;
+    content: attr(data-label);
+    flex-basis: 50%;
+    text-align: right;
+  }
+}
+
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th, td {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid #DDD;
+}
+h2 {
+  font-family: courier;
+  color: rgb(190, 11, 11);
+}
+tr:hover {background-color: #D6EEEE;}
+tr:nth-child(1) {
+  background-color: #555757;
+  color: white;
+}
+		</style>
+	</head>
+	<body>
+			  <div id="left" >
+				<a href="/">
+                    <button type="button" name="create" >Back</button>
+                </a>
+  
+			</div>
+			<div id="right" align="center" style="padding: 25px;">
+            <br><h2>Subscribed Contacts ({{.Subzcount}})</h2><br>
+            <table style="width:100%">
+                {{range .Subscribe}}
+
+                <tr>
+                  {{range .}}
+                  <td>{{.}}</td>
+                  {{end}}
+                </tr>
+                {{end}}
+
+            </table>
+            <br>
+        
+            <br><h2>UnSubscribed Contacts ({{.Unsubzcount}})</h2><br>
+            <table style="width:100%">
+                {{range .Unsubscribe}}
+
+                <tr>
+                  {{range .}}
+                  <td>{{.}}</td>
+                  {{end}}
+                </tr>
+                {{end}}
+
+            </table>
+
+
+            <br><h2>Not Subscribed Contacts ({{.Notsubzcount}})</h2><br>
+            <table style="width:100%">
+                {{range .Notsubscribe}}
+
+                <tr>
+                  {{range .}}
+                  <td>{{.}}</td>
+                  {{end}}
+                </tr>
+                {{end}}
+
+            </table>
+            <br>
+        
+        
+          <div style="padding: 50px; background-color: #6C7A89;color: #ffffff;">
+            <h3>Upload CSV here</h3><br><br>
+            <form action="/csv" method="post" enctype="multipart/form-data">
+                <input type="file" name="file" ><br><br>
+                <label for="type">Category: </label>
+                <select name="type" id="">
+                  <option value="subscribe">Subscribe</option>
+                  <option value="unsubscribe">UnSubscribed</option>
+                  <option value="notsubscribe">Not Subscribe</option>
+                </select><br><br>
+                <input type="radio" name="action" value="replace">
+                 <label for="replace">Replace with Previous Record</label><br>
+                 <input type="radio" name="action" value="append">
+                 <label for="append">append to Previous Record</label><br>
+
+                <input type="submit" value="upload" style="padding: 10px;">
+            </form>
+          </div>
+      </div>
+			<br><br><br>
+
+
+
+			
+	</body>
+
+</html>
+
+
+

@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+	<head>
+        <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Email Sender by faziprodesigner@fiverr</title>
+
+		<style>
+			* {
+				margin: 0px;
+				padding: 0px;
+			}
+			body{
+				background-color: #f2f2f2;
+
+			}
+      button {
+        font-size: small;
+        color: #ffffff;
+        background-color: #2d63c8;
+        font-size: 19px;
+        border: 1px solid #2d63c8;
+        padding: 15px 50px;
+        cursor: pointer
+      }
+
+      button:hover {
+        color: #2d63c8;
+        background-color: #ffffff;
+      }
+
+      #left{
+        background-color:#336cd7;
+      }
+
+      canvas {
+        display: block;
+        position:absolute;
+        margin-top: 80px;
+        top:0;
+    }
+    span {
+        color:#555;
+        display:block;
+        line-height:220px;
+        text-align:center;
+        width:220px;
+        font-family:sans-serif;
+        font-size: 24px;
+        font-weight:100;
+        margin-left:5px;
+    }
+
+    .row {
+      margin-left:-5px;
+      margin-right:-5px;
+    }
+      
+    .column {
+      float: left;
+      width: 30%;
+      padding: 5px;
+    }
+
+    /* Clearfix (clear floats) */
+    .row::after {
+      content: "";
+      clear: both;
+      display: table;
+    }
+
+    table {
+      border-collapse: collapse;
+      border-spacing: 0;
+      width: 100%;
+      border: 1px solid #ddd;
+    }
+
+    th, td {
+      text-align: center;
+      padding: 8px;
+    }
+
+    tr:nth-child(1) {
+      background-color: #2891f3;
+      font-family: sans-serif;
+      color: white;
+      font-size:larger;
+    }
+    tr:nth-child(1):hover {
+      background-color: #2891f3;
+    }
+    tr:hover {background-color: #D6EEEE;}
+
+    /* Responsive layout - makes the two columns stack on top of each other instead of next to each other on screens that are smaller than 600 px */
+    @media screen and (max-width: 600px) {
+      .column {
+        width: 100%;
+      }
+    }
+
+		</style>
+	</head>
+	<body>
+			  <div id="left" >
+				<a href="/analytics">
+                    <button type="button" name="create" >Back</button>
+                </a>
+  
+			</div>
+			<div id="right" style="padding: 25px;">
+        <div class="row progress">
+          <!-- Pregress circles for analytic overview             -->
+          <div class="chart column" id="ViewGraph" data-percent="0"></div>
+          <div class="bounce">
+            <div class="chart column" id="BounceGraph" data-percent="0"></div>
+
+          </div>
+        </div>
+
+
+        <!-- 3 table for detailed analytic data -->
+        <div class="row">
+          {{range .}}
+            <div class="column">
+              <table>
+                <tr>
+                    <td>
+                        Viewed Email by reciever <br> {{.ViewCount}} <br> 
+                    </td>
+                </tr>
+
+                  {{range .ViewdEmail}}
+                  <tr>
+                  <td>{{.}}</td>
+                  </tr>
+                  {{end}}
+              </table>
+            </div>
+            
+            <div class="column">
+              <table>
+                <tr>
+                    <td>
+                        Email Sent to <br> {{.TotalEmailSent}}
+                    </td>
+                </tr>
+
+                {{range .SentList}}
+                <tr>
+                  <td>{{.}}</td>
+                </tr>
+                {{end}}
+              </table>
+            </div>
+
+            <div class="column">
+              <table>
+                <tr>
+                    <td>
+                        Bounced Emails <br> {{.BounceCount}}
+                    </td>
+                </tr>
+
+                {{range .BounceList}}
+                <tr>
+                  <td>{{.}}</td>
+                </tr>
+                {{end}}
+              </table>
+            </div>
+          {{end}}
+        </div>
+
+      </div>
+			<br><br><br>
+
+
+
+			
+	</body>
+
+    <script>
+        {{range .}}
+          percentageView = Math.round(( {{.ViewCount}} / {{.TotalEmailSent}} ) * 100);
+          bouncepercent = Math.round(( {{.BounceCount}} / {{.TotalEmailSent}} ) * 100);
+        {{end}}
+        pp=document.getElementById("ViewGraph")
+        pp.setAttribute("data-percent",percentageView)
+
+        bp=document.getElementById("BounceGraph")
+        bp.setAttribute("data-percent",bouncepercent)
+
+
+        // creating progress 3 circles
+        createPregress("ViewGraph","Views");
+        createPregress("BounceGraph","Bounce");
+
+        // function to create progress circle
+        function createPregress(graph,comment){
+            var el = document.getElementById(graph); // get canvas
+
+            var options = {
+                percent:  el.getAttribute('data-percent') || 25,
+                size: el.getAttribute('data-size') || 220,
+                lineWidth: el.getAttribute('data-line') || 15,
+                rotate: el.getAttribute('data-rotate') || 0
+            }
+
+            var canvas = document.createElement('canvas');
+            var span = document.createElement('span');
+            span.textContent = options.percent + '% '+comment;
+
+            if (typeof(G_vmlCanvasManager) !== 'undefined') {
+                G_vmlCanvasManager.initElement(canvas);
+            }
+
+            var ctx = canvas.getContext('2d');
+            canvas.width = canvas.height = options.size;
+
+            el.appendChild(span);
+            el.appendChild(canvas);
+
+            ctx.translate(options.size / 2, options.size / 2); // change center
+            ctx.rotate((-1 / 2 + options.rotate / 180) * Math.PI); // rotate -90 deg
+
+            //imd = ctx.getImageData(0, 0, 240, 240);
+            var radius = (options.size - options.lineWidth) / 2;
+
+            var drawCircle = function(color, lineWidth, percent) {
+                    percent = Math.min(Math.max(0, percent || 1), 1);
+                    ctx.beginPath();
+                    ctx.arc(0, 0, radius, 0, Math.PI * 2 * percent, false);
+                    ctx.strokeStyle = color;
+                    ctx.lineCap = 'round'; // butt, round or square
+                    ctx.lineWidth = lineWidth
+                    ctx.stroke();
+            };
+
+            drawCircle('lightgrey', options.lineWidth, 100 / 100);
+            drawCircle('#555555', options.lineWidth, options.percent / 100); 
+        }
+    </script>
+</html>
+
+
+

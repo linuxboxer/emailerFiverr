@@ -1,0 +1,1037 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Email Sender by faziprodesigner@fiverr</title>
+    <script src="https://editor.unlayer.com/embed.js">
+            httpGet("http:////"+document.domain+":4556/csv");
+    </script>
+		<style>
+			* {
+				margin: 0px;
+				padding: 0px;
+			}
+			body{
+				background-color: #f2f2f2;
+
+			}
+		button {
+			font-size: small;
+			color: #ffffff;
+			background-color: #2d63c8;
+			font-size: 19px;
+			border: 1px solid #2d63c8;
+			padding: 15px 50px;
+			cursor: pointer
+		}
+		
+		button:hover {
+			color: #2d63c8;
+			background-color: #ffffff;
+		}
+
+		#left{
+			background-color:#336cd7;
+		}
+
+
+
+	
+
+
+
+.container {
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+h2 {
+  font-size: 26px;
+  text-align: center;
+}
+h2 small {
+  font-size: 0.5em;
+}
+
+
+
+
+
+input[type=text], select, textarea {
+  width: 90%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: vertical;
+}
+
+label {
+  padding: 12px 12px 12px 0;
+  display: inline-block;
+}
+
+input[type=submit] {
+  background-color: #04AA6D;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  float: right;
+}
+
+input[type=submit]:hover {
+  background-color: #45a049;
+}
+
+.container {
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 20px;
+}
+
+.col-25 {
+  float: left;
+  width: 25%;
+  margin-top: 6px;
+}
+
+.col-75 {
+  float: left;
+  width: 75%;
+  margin-top: 6px;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 600px) {
+  .col-25, .col-75, input[type=submit] {
+    width: 100%;
+    margin-top: 0;
+  }
+}
+
+
+#left-bar {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 45%;
+  overflow-y: auto;
+}
+#right-bar {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 55%;
+  overflow-y: auto;
+
+}
+/* The popup form - hidden by default */
+.popup-builder {
+  display: none;
+  width:100%;
+  height: 100%;
+  background:blue;
+  position: fixed;
+  top: 0;
+  border: 3px solid #f1f1f1;
+  z-index: 9;
+}
+  
+</style>
+	</head>
+	<body>
+    
+    <div class="popup-builder" id="mybuilder">
+      <button type="button" class="btn cancel" onclick="closeBuilder()" style="width:150px;height: 50px;">Continue</button>
+      <div id="editor-container" style="height: 90%;"></div>
+    </div>
+
+
+		<div id="left" >
+
+		</div>
+		<div id="left-bar" >
+      <a href="/">
+        <button type="button" name="create" >Back</button>
+      </a>
+      <h2 style="color: black;">Create a Compagin</h2>
+
+			<br>
+			<br>
+			<div class="container" style="box-sizing: border-box;">
+
+                <form action="/create" method="POST" >
+
+                    <div class="row">
+                      <div class="col-25">
+                        <label for="title">Compagins Name</label>
+                      </div>
+                      <div class="col-75">
+                        <input type="text" id="title" name="title" placeholder="Compagins title..">
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-25">
+                        <label for="subject">Subject</label>
+                      </div>
+                      <div class="col-75">
+                        <input type="text" id="subject" name="subject" placeholder="Email Subject..">
+                      </div>
+                    </div>
+
+   
+                    <div class="row">
+                      <div class="col-25">
+                        <label for="logo">Exported Template</label>
+                      </div>
+                      <div class="col-75">
+                        <a onclick="openBuilder();" style="font-family:Open Sans,sans-serif;text-decoration:none;font-size:16px;background-color:#6d53d0;display:inline-block;color:#fff;padding:10px 25px;text-align:center;border-radius:5px;margin:0 auto" >Create a Email Design</a>	
+                        <textarea id="exportedtmpl" name="exportedtmpl" cols="30" rows="10" style="display: none;"></textarea>
+                      </div>
+                    </div>
+
+
+
+                    <div class="row">
+                      <div class="col-25">
+                        <label for="logo">To :</label>
+                      </div>
+                      <div class="col-75">
+                        <input type="checkbox" name="tosubscribe" value="send">
+                        <label for="vehicle1"> send to subscribed Contacts </label>({{if .SubCount}} {{.SubCount}}  {{else}} 0 {{end}})<br>
+                        <input type="checkbox" name="tounsubscribe" value="send">
+                        <label for="vehicle2"> send to unsubscribed Contacts </label>({{if .UnsubCount}} {{.UnsubCount}}  {{else}} 0 {{end}})<br>
+                        <input type="checkbox" name="tonotsubscribe" value="send">
+                        <label for="vehicle3"> send to Not Subscribed Contacts</label>({{if .NotsubCount}} {{.NotsubCount}}  {{else}} 0 {{end}})<br><br>
+                      </div>
+                    </div>
+
+
+                    <div class="row">
+                      <div class="col-25">
+                        <a onclick="addnewattach();" style="font-family:Open Sans,sans-serif;text-decoration:none;font-size:12px;background-color:#6d53d0;display:inline-block;color:#fff;padding:10px 10px;text-align:center;border-radius:5px;margin:0 auto">Add a Email attachment</a></div>
+                    </div>
+
+                    <div id="attachment"><br></div>
+
+                    <div class="row">
+                      <div class="col-25">
+                        <label for="runtime">Schedule your Campagin</label>
+                      </div>
+                      <div class="col-75">
+                        <input type="datetime-local" id="runtime" name="runtime">
+                      </div>
+                    </div>
+
+                    <br>
+
+                    <div class="row">
+                      <br>
+                      <input type="submit" value="Create a Campagin">
+                    </div>
+
+                  </form>
+			</div>
+
+		</div>
+	  
+
+
+    <div id="right-bar">
+    </div>
+	</body>
+  <script>
+    var templateCreater = false;
+    // builder popup code here
+    function openBuilder() {
+    // builder code
+    hiddenbody=document.getElementById("exportedtmpl")
+    if (hiddenbody.value=="") {
+      templateCreater=false;
+    }
+    if (templateCreater==false) {
+      unlayer.init({
+        id: 'editor-container',
+        projectId: 90324,
+        displayMode: 'email'
+      })
+      
+      unlayer.loadDesign(TemplateDesign);
+
+    } else{
+      return;
+    }
+
+      document.getElementById("mybuilder").style.display = "block";
+    }
+
+    function closeBuilder() {
+      unlayer.exportHtml(function(data) {
+        var json = data.design; // design json
+        var html = data.html; // final html
+
+        // Do something with the json and html
+        hiddenbody=document.getElementById("exportedtmpl")
+        hiddenbody.value="";
+        hiddenbody.value=html
+
+        var tag_id = document.getElementById('right-bar');
+        tag_id.innerHTML = "";
+        tag_id.innerHTML = html;
+      })
+
+      document.getElementById("mybuilder").style.display = "none";
+      templateCreater=true;
+    }
+
+
+    // my custom code
+    var attachmentadded = false;
+    var csvadded = false;
+
+    
+
+    function addnewattach(){
+      if (!attachmentadded) {
+      filedata=httpGet("http:////"+document.domain+":4556/getfilenames");
+      files=filedata.split("/");
+      files.pop();
+
+      selectag=document.createElement("select");
+      selectag.setAttribute("name","attachmentoye");
+
+      zzz=document.getElementById("attachment");
+      for(x in files){
+      optiontag=document.createElement("option");
+      optiontag.setAttribute("value",files[x]);
+      optiontag.text=files[x];
+      selectag.appendChild(optiontag);
+      }
+
+      zzz.appendChild(selectag);
+      attachmentadded=true;
+    }
+  }
+
+    // helper functions
+
+    function httpGet(theUrl){
+      var xmlHttp = new XMLHttpRequest();
+      xmlHttp.open( "GET", theUrl, false ); // false for synchronous request
+      xmlHttp.send( null );
+      return xmlHttp.responseText;
+    }
+    TemplateDesign = {
+    "counters": {
+        "u_row": 6,
+        "u_column": 6,
+        "u_content_text": 8,
+        "u_content_image": 2,
+        "u_content_button": 1,
+        "u_content_social": 1
+    },
+    "body": {
+        "id": "8sPSCMzolX",
+        "rows": [{
+            "id": "mD3slrzdw8",
+            "cells": [1],
+            "columns": [{
+                "id": "jQbZlofLpc",
+                "contents": [{
+                    "id": "KYbs3zFukS",
+                    "type": "text",
+                    "values": {
+                        "containerPadding": "10px",
+                        "anchor": "",
+                        "color": "#afb0c7",
+                        "textAlign": "center",
+                        "lineHeight": "170%",
+                        "linkStyle": {
+                            "inherit": true,
+                            "linkColor": "#0000ee",
+                            "linkHoverColor": "#0000ee",
+                            "linkUnderline": true,
+                            "linkHoverUnderline": true
+                        },
+                        "hideDesktop": false,
+                        "displayCondition": null,
+                        "_meta": {
+                            "htmlID": "u_content_text_1",
+                            "htmlClassNames": "u_content_text"
+                        },
+                        "selectable": true,
+                        "draggable": true,
+                        "duplicatable": true,
+                        "deletable": true,
+                        "hideable": true,
+                        "text": "<p style=\"font-size: 14px; line-height: 170%;\"><span style=\"font-size: 14px; line-height: 23.8px;\">View Email in Browser</span></p>",
+                        "hideMobile": false
+                    }
+                }],
+                "values": {
+                    "_meta": {
+                        "htmlID": "u_column_1",
+                        "htmlClassNames": "u_column"
+                    },
+                    "border": {},
+                    "padding": "0px",
+                    "backgroundColor": ""
+                }
+            }],
+            "values": {
+                "displayCondition": null,
+                "columns": false,
+                "backgroundColor": "",
+                "columnsBackgroundColor": "",
+                "backgroundImage": {
+                    "url": "",
+                    "fullWidth": true,
+                    "repeat": false,
+                    "center": true,
+                    "cover": false
+                },
+                "padding": "0px",
+                "anchor": "",
+                "hideDesktop": false,
+                "_meta": {
+                    "htmlID": "u_row_1",
+                    "htmlClassNames": "u_row"
+                },
+                "selectable": true,
+                "draggable": true,
+                "duplicatable": true,
+                "deletable": true,
+                "hideable": true,
+                "hideMobile": false,
+                "noStackMobile": false
+            }
+        }, {
+            "id": "LR4CeG0Y_r",
+            "cells": [1],
+            "columns": [{
+                "id": "bxge2iKjWr",
+                "contents": [{
+                    "id": "NLdXosG6Ia",
+                    "type": "image",
+                    "values": {
+                        "containerPadding": "20px",
+                        "anchor": "",
+                        "src": {
+                            "url": "https://cdn.templates.unlayer.com/assets/1597218426091-xx.png",
+                            "width": 537,
+                            "height": 137,
+                            "maxWidth": "32%",
+                            "autoWidth": false
+                        },
+                        "textAlign": "center",
+                        "altText": "Image",
+                        "action": {
+                            "name": "web",
+                            "values": {
+                                "href": "",
+                                "target": "_blank"
+                            }
+                        },
+                        "hideDesktop": false,
+                        "displayCondition": null,
+                        "_meta": {
+                            "htmlID": "u_content_image_1",
+                            "htmlClassNames": "u_content_image"
+                        },
+                        "selectable": true,
+                        "draggable": true,
+                        "duplicatable": true,
+                        "deletable": true,
+                        "hideable": true,
+                        "hideMobile": false
+                    }
+                }],
+                "values": {
+                    "_meta": {
+                        "htmlID": "u_column_2",
+                        "htmlClassNames": "u_column"
+                    },
+                    "border": {},
+                    "padding": "0px",
+                    "backgroundColor": ""
+                }
+            }],
+            "values": {
+                "displayCondition": null,
+                "columns": false,
+                "backgroundColor": "",
+                "columnsBackgroundColor": "#ffffff",
+                "backgroundImage": {
+                    "url": "",
+                    "fullWidth": true,
+                    "repeat": false,
+                    "center": true,
+                    "cover": false
+                },
+                "padding": "0px",
+                "anchor": "",
+                "hideDesktop": false,
+                "_meta": {
+                    "htmlID": "u_row_2",
+                    "htmlClassNames": "u_row"
+                },
+                "selectable": true,
+                "draggable": true,
+                "duplicatable": true,
+                "deletable": true,
+                "hideable": true,
+                "hideMobile": false,
+                "noStackMobile": false
+            }
+        }, {
+            "id": "PxtcqfEZRh",
+            "cells": [1],
+            "columns": [{
+                "id": "vybmd6FqvN",
+                "contents": [{
+                    "id": "hm_6tCTZ4l",
+                    "type": "image",
+                    "values": {
+                        "containerPadding": "40px 10px 10px",
+                        "anchor": "",
+                        "src": {
+                            "url": "https://cdn.templates.unlayer.com/assets/1597218650916-xxxxc.png",
+                            "width": 335,
+                            "height": 93,
+                            "maxWidth": "26%",
+                            "autoWidth": false
+                        },
+                        "textAlign": "center",
+                        "altText": "Image",
+                        "action": {
+                            "name": "web",
+                            "values": {
+                                "href": "",
+                                "target": "_blank"
+                            }
+                        },
+                        "hideDesktop": false,
+                        "displayCondition": null,
+                        "_meta": {
+                            "htmlID": "u_content_image_2",
+                            "htmlClassNames": "u_content_image"
+                        },
+                        "selectable": true,
+                        "draggable": true,
+                        "duplicatable": true,
+                        "deletable": true,
+                        "hideable": true,
+                        "hideMobile": false
+                    }
+                }, {
+                    "id": "fgoYCAezJ7",
+                    "type": "text",
+                    "values": {
+                        "containerPadding": "10px",
+                        "anchor": "",
+                        "color": "#e5eaf5",
+                        "textAlign": "center",
+                        "lineHeight": "140%",
+                        "linkStyle": {
+                            "inherit": true,
+                            "linkColor": "#0000ee",
+                            "linkHoverColor": "#0000ee",
+                            "linkUnderline": true,
+                            "linkHoverUnderline": true
+                        },
+                        "hideDesktop": false,
+                        "displayCondition": null,
+                        "_meta": {
+                            "htmlID": "u_content_text_3",
+                            "htmlClassNames": "u_content_text"
+                        },
+                        "selectable": true,
+                        "draggable": true,
+                        "duplicatable": true,
+                        "deletable": true,
+                        "hideable": true,
+                        "text": "<p style=\"font-size: 14px; line-height: 140%;\"><strong>T H A N K S&nbsp; &nbsp;F O R&nbsp; &nbsp;S I G N I N G&nbsp; &nbsp;U P !</strong></p>",
+                        "hideMobile": false
+                    }
+                }, {
+                    "id": "dV42_LUwAQ",
+                    "type": "text",
+                    "values": {
+                        "containerPadding": "0px 10px 31px",
+                        "anchor": "",
+                        "color": "#e5eaf5",
+                        "textAlign": "center",
+                        "lineHeight": "140%",
+                        "linkStyle": {
+                            "inherit": true,
+                            "linkColor": "#0000ee",
+                            "linkHoverColor": "#0000ee",
+                            "linkUnderline": true,
+                            "linkHoverUnderline": true
+                        },
+                        "hideDesktop": false,
+                        "displayCondition": null,
+                        "_meta": {
+                            "htmlID": "u_content_text_4",
+                            "htmlClassNames": "u_content_text"
+                        },
+                        "selectable": true,
+                        "draggable": true,
+                        "duplicatable": true,
+                        "deletable": true,
+                        "hideable": true,
+                        "text": "<p style=\"font-size: 14px; line-height: 140%;\"><span style=\"font-size: 28px; line-height: 39.2px;\"><strong><span style=\"line-height: 39.2px; font-size: 28px;\">Verify Your E-mail Address&nbsp;</span></strong></span></p>",
+                        "hideMobile": false
+                    }
+                }],
+                "values": {
+                    "_meta": {
+                        "htmlID": "u_column_3",
+                        "htmlClassNames": "u_column"
+                    },
+                    "border": {},
+                    "padding": "0px",
+                    "backgroundColor": ""
+                }
+            }],
+            "values": {
+                "displayCondition": null,
+                "columns": false,
+                "backgroundColor": "",
+                "columnsBackgroundColor": "#003399",
+                "backgroundImage": {
+                    "url": "",
+                    "fullWidth": true,
+                    "repeat": false,
+                    "center": true,
+                    "cover": false
+                },
+                "padding": "0px",
+                "anchor": "",
+                "hideDesktop": false,
+                "_meta": {
+                    "htmlID": "u_row_3",
+                    "htmlClassNames": "u_row"
+                },
+                "selectable": true,
+                "draggable": true,
+                "duplicatable": true,
+                "deletable": true,
+                "hideable": true,
+                "hideMobile": false,
+                "noStackMobile": false
+            }
+        }, {
+            "id": "8iI93NF5D_",
+            "cells": [1],
+            "columns": [{
+                "id": "nuB_uKgujw",
+                "contents": [{
+                    "id": "5QbhvNPstU",
+                    "type": "text",
+                    "values": {
+                        "containerPadding": "33px 55px",
+                        "anchor": "",
+                        "textAlign": "center",
+                        "lineHeight": "160%",
+                        "linkStyle": {
+                            "inherit": true,
+                            "linkColor": "#0000ee",
+                            "linkHoverColor": "#0000ee",
+                            "linkUnderline": true,
+                            "linkHoverUnderline": true
+                        },
+                        "hideDesktop": false,
+                        "displayCondition": null,
+                        "_meta": {
+                            "htmlID": "u_content_text_6",
+                            "htmlClassNames": "u_content_text"
+                        },
+                        "selectable": true,
+                        "draggable": true,
+                        "duplicatable": true,
+                        "deletable": true,
+                        "hideable": true,
+                        "text": "<p style=\"font-size: 14px; line-height: 160%;\"><span style=\"font-size: 22px; line-height: 35.2px;\">Hi, </span></p>\n<p style=\"font-size: 14px; line-height: 160%;\"><span style=\"font-size: 18px; line-height: 28.8px;\">You're almost ready to get started. Please click on the button below to verify your email address and enjoy exclusive cleaning services with us!&nbsp;</span></p>",
+                        "hideMobile": false
+                    }
+                }, {
+                    "id": "aJR2aeu286",
+                    "type": "button",
+                    "values": {
+                        "containerPadding": "10px",
+                        "anchor": "",
+                        "href": {
+                            "name": "web",
+                            "values": {
+                                "href": "",
+                                "target": "_blank"
+                            }
+                        },
+                        "buttonColors": {
+                            "color": "#FFFFFF",
+                            "backgroundColor": "#ff6600",
+                            "hoverColor": "#FFFFFF",
+                            "hoverBackgroundColor": "#3AAEE0"
+                        },
+                        "size": {
+                            "autoWidth": true,
+                            "width": "100%"
+                        },
+                        "textAlign": "center",
+                        "lineHeight": "120%",
+                        "padding": "14px 44px 13px",
+                        "border": {},
+                        "borderRadius": "4px",
+                        "hideDesktop": false,
+                        "displayCondition": null,
+                        "_meta": {
+                            "htmlID": "u_content_button_1",
+                            "htmlClassNames": "u_content_button"
+                        },
+                        "selectable": true,
+                        "draggable": true,
+                        "duplicatable": true,
+                        "deletable": true,
+                        "hideable": true,
+                        "text": "<span style=\"font-size: 16px; line-height: 19.2px;\"><strong><span style=\"line-height: 19.2px; font-size: 16px;\">VERIFY YOUR EMAIL</span></strong></span>",
+                        "hideMobile": false,
+                        "calculatedWidth": 234,
+                        "calculatedHeight": 46
+                    }
+                }, {
+                    "id": "aC7xeNpl09",
+                    "type": "text",
+                    "values": {
+                        "containerPadding": "33px 55px 60px",
+                        "anchor": "",
+                        "textAlign": "center",
+                        "lineHeight": "160%",
+                        "linkStyle": {
+                            "inherit": true,
+                            "linkColor": "#0000ee",
+                            "linkHoverColor": "#0000ee",
+                            "linkUnderline": true,
+                            "linkHoverUnderline": true
+                        },
+                        "hideDesktop": false,
+                        "displayCondition": null,
+                        "_meta": {
+                            "htmlID": "u_content_text_7",
+                            "htmlClassNames": "u_content_text"
+                        },
+                        "selectable": true,
+                        "draggable": true,
+                        "duplicatable": true,
+                        "deletable": true,
+                        "hideable": true,
+                        "text": "<p style=\"line-height: 160%; font-size: 14px;\"><span style=\"font-size: 18px; line-height: 28.8px;\">Thanks,</span></p>\n<p style=\"line-height: 160%; font-size: 14px;\"><span style=\"font-size: 18px; line-height: 28.8px;\">The Company Team</span></p>",
+                        "hideMobile": false
+                    }
+                }],
+                "values": {
+                    "_meta": {
+                        "htmlID": "u_column_4",
+                        "htmlClassNames": "u_column"
+                    },
+                    "border": {},
+                    "padding": "0px",
+                    "backgroundColor": ""
+                }
+            }],
+            "values": {
+                "displayCondition": null,
+                "columns": false,
+                "backgroundColor": "",
+                "columnsBackgroundColor": "#ffffff",
+                "backgroundImage": {
+                    "url": "",
+                    "fullWidth": true,
+                    "repeat": false,
+                    "center": true,
+                    "cover": false
+                },
+                "padding": "0px",
+                "anchor": "",
+                "hideDesktop": false,
+                "_meta": {
+                    "htmlID": "u_row_4",
+                    "htmlClassNames": "u_row"
+                },
+                "selectable": true,
+                "draggable": true,
+                "duplicatable": true,
+                "deletable": true,
+                "hideable": true,
+                "hideMobile": false,
+                "noStackMobile": false
+            }
+        }, {
+            "id": "GQwlZkOW5j",
+            "cells": [1],
+            "columns": [{
+                "id": "tcylGSQG3N",
+                "contents": [{
+                    "id": "6VHky5bQbU",
+                    "type": "text",
+                    "values": {
+                        "containerPadding": "41px 55px 18px",
+                        "anchor": "",
+                        "color": "#003399",
+                        "textAlign": "center",
+                        "lineHeight": "160%",
+                        "linkStyle": {
+                            "inherit": true,
+                            "linkColor": "#0000ee",
+                            "linkHoverColor": "#0000ee",
+                            "linkUnderline": true,
+                            "linkHoverUnderline": true
+                        },
+                        "hideDesktop": false,
+                        "displayCondition": null,
+                        "_meta": {
+                            "htmlID": "u_content_text_5",
+                            "htmlClassNames": "u_content_text"
+                        },
+                        "selectable": true,
+                        "draggable": true,
+                        "duplicatable": true,
+                        "deletable": true,
+                        "hideable": true,
+                        "text": "<p style=\"font-size: 14px; line-height: 160%;\"><span style=\"font-size: 20px; line-height: 32px;\"><strong>Get in touch</strong></span></p>\n<p style=\"font-size: 14px; line-height: 160%;\"><span style=\"font-size: 16px; line-height: 25.6px; color: #000000;\">+11 111 333 4444</span></p>\n<p style=\"font-size: 14px; line-height: 160%;\"><span style=\"font-size: 16px; line-height: 25.6px; color: #000000;\">Info@YourCompany.com</span></p>",
+                        "hideMobile": false
+                    }
+                }, {
+                    "id": "KwJjJnGc33",
+                    "type": "social",
+                    "values": {
+                        "containerPadding": "10px 10px 33px",
+                        "anchor": "",
+                        "icons": {
+                            "iconType": "circle-black",
+                            "icons": [{
+                                "url": "https://facebook.com/",
+                                "name": "Facebook"
+                            }, {
+                                "url": "https://linkedin.com/",
+                                "name": "LinkedIn"
+                            }, {
+                                "url": "https://instagram.com/",
+                                "name": "Instagram"
+                            }, {
+                                "url": "https://youtube.com/",
+                                "name": "YouTube"
+                            }, {
+                                "url": "https://email.com/",
+                                "name": "Email"
+                            }],
+                            "editor": {
+                                "data": {
+                                    "showDefaultIcons": true,
+                                    "showDefaultOptions": true,
+                                    "customIcons": [],
+                                    "customOptions": []
+                                }
+                            }
+                        },
+                        "align": "center",
+                        "spacing": 17,
+                        "hideDesktop": false,
+                        "displayCondition": null,
+                        "_meta": {
+                            "htmlID": "u_content_social_1",
+                            "htmlClassNames": "u_content_social"
+                        },
+                        "selectable": true,
+                        "draggable": true,
+                        "duplicatable": true,
+                        "deletable": true,
+                        "hideable": true,
+                        "hideMobile": false
+                    }
+                }],
+                "values": {
+                    "_meta": {
+                        "htmlID": "u_column_5",
+                        "htmlClassNames": "u_column"
+                    },
+                    "border": {},
+                    "padding": "0px",
+                    "backgroundColor": ""
+                }
+            }],
+            "values": {
+                "displayCondition": null,
+                "columns": false,
+                "backgroundColor": "",
+                "columnsBackgroundColor": "#e5eaf5",
+                "backgroundImage": {
+                    "url": "",
+                    "fullWidth": true,
+                    "repeat": false,
+                    "center": true,
+                    "cover": false
+                },
+                "padding": "0px",
+                "anchor": "",
+                "hideDesktop": false,
+                "_meta": {
+                    "htmlID": "u_row_5",
+                    "htmlClassNames": "u_row"
+                },
+                "selectable": true,
+                "draggable": true,
+                "duplicatable": true,
+                "deletable": true,
+                "hideable": true,
+                "hideMobile": false,
+                "noStackMobile": false
+            }
+        }, {
+            "id": "Yv1vVlWCmI",
+            "cells": [1],
+            "columns": [{
+                "id": "Mi8EKL8HfF",
+                "contents": [{
+                    "id": "iyiG6C8d98",
+                    "type": "text",
+                    "values": {
+                        "containerPadding": "10px",
+                        "anchor": "",
+                        "color": "#fafafa",
+                        "textAlign": "center",
+                        "lineHeight": "180%",
+                        "linkStyle": {
+                            "inherit": true,
+                            "linkColor": "#0000ee",
+                            "linkHoverColor": "#0000ee",
+                            "linkUnderline": true,
+                            "linkHoverUnderline": true
+                        },
+                        "hideDesktop": false,
+                        "displayCondition": null,
+                        "_meta": {
+                            "htmlID": "u_content_text_8",
+                            "htmlClassNames": "u_content_text"
+                        },
+                        "selectable": true,
+                        "draggable": true,
+                        "duplicatable": true,
+                        "deletable": true,
+                        "hideable": true,
+                        "text": "<p style=\"font-size: 14px; line-height: 180%;\"><span style=\"font-size: 16px; line-height: 28.8px;\">Copyrights &copy; Company All Rights Reserved</span></p>",
+                        "hideMobile": false
+                    }
+                }],
+                "values": {
+                    "_meta": {
+                        "htmlID": "u_column_6",
+                        "htmlClassNames": "u_column"
+                    },
+                    "border": {},
+                    "padding": "0px",
+                    "backgroundColor": ""
+                }
+            }],
+            "values": {
+                "displayCondition": null,
+                "columns": false,
+                "backgroundColor": "",
+                "columnsBackgroundColor": "#003399",
+                "backgroundImage": {
+                    "url": "",
+                    "fullWidth": true,
+                    "repeat": false,
+                    "center": true,
+                    "cover": false
+                },
+                "padding": "0px",
+                "anchor": "",
+                "hideDesktop": false,
+                "_meta": {
+                    "htmlID": "u_row_6",
+                    "htmlClassNames": "u_row"
+                },
+                "selectable": true,
+                "draggable": true,
+                "duplicatable": true,
+                "deletable": true,
+                "hideable": true,
+                "hideMobile": false,
+                "noStackMobile": false
+            }
+        }],
+        "values": {
+            "popupPosition": "center",
+            "popupWidth": "600px",
+            "popupHeight": "auto",
+            "borderRadius": "10px",
+            "contentAlign": "center",
+            "contentVerticalAlign": "center",
+            "contentWidth": "600px",
+            "fontFamily": {
+                "label": "Cabin",
+                "value": "'Cabin',sans-serif",
+                "url": "https://fonts.googleapis.com/css?family=Cabin:400,700",
+                "defaultFont": true
+            },
+            "textColor": "#000000",
+            "popupBackgroundColor": "#FFFFFF",
+            "popupBackgroundImage": {
+                "url": "",
+                "fullWidth": true,
+                "repeat": false,
+                "center": true,
+                "cover": true
+            },
+            "popupOverlay_backgroundColor": "rgba(0, 0, 0, 0.1)",
+            "popupCloseButton_position": "top-right",
+            "popupCloseButton_backgroundColor": "#DDDDDD",
+            "popupCloseButton_iconColor": "#000000",
+            "popupCloseButton_borderRadius": "0px",
+            "popupCloseButton_margin": "0px",
+            "popupCloseButton_action": {
+                "name": "close_popup",
+                "attrs": {
+                    "onClick": "document.querySelector('.u-popup-container').style.display = 'none';"
+                }
+            },
+            "backgroundColor": "#f9f9f9",
+            "backgroundImage": {
+                "url": "",
+                "fullWidth": true,
+                "repeat": false,
+                "center": true,
+                "cover": false
+            },
+            "preheaderText": "",
+            "linkStyle": {
+                "body": true,
+                "linkColor": "#0000ee",
+                "linkHoverColor": "#0000ee",
+                "linkUnderline": true,
+                "linkHoverUnderline": true
+            },
+            "_meta": {
+                "htmlID": "u_body",
+                "htmlClassNames": "u_body"
+            }
+        }
+    },
+    "schemaVersion": 9
+}
+  </script>
+</html>

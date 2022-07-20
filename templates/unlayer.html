@@ -1,0 +1,177 @@
+<script src="http//editor.unlayer.com/embed.js"></script>
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Email Sender by faziprodesigner@fiverr</title>
+        <script src="https://editor.unlayer.com/embed.js"></script>
+		<style>
+			* {
+				margin: 0px;
+				padding: 0px;
+			}
+			body{
+				background-color: #f2f2f2;
+
+			}
+		button {
+			font-size: small;
+			color: #ffffff;
+			background-color: #2d63c8;
+			font-size: 19px;
+			border: 1px solid #2d63c8;
+			padding: 15px 50px;
+			cursor: pointer
+		}
+		
+		button:hover {
+			color: #2d63c8;
+			background-color: #ffffff;
+		}
+
+		#left{
+			background-color:#336cd7;
+		}
+
+
+
+	
+
+
+
+.container {
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+h2 {
+  font-size: 26px;
+  text-align: center;
+}
+h2 small {
+  font-size: 0.5em;
+}
+
+
+
+
+
+input[type=text], select, textarea {
+  width: 90%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: vertical;
+}
+
+label {
+  padding: 12px 12px 12px 0;
+  display: inline-block;
+}
+
+input[type=submit] {
+  background-color: #04AA6D;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  float: right;
+}
+
+input[type=submit]:hover {
+  background-color: #45a049;
+}
+
+.container {
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 20px;
+}
+
+.col-25 {
+  float: left;
+  width: 25%;
+  margin-top: 6px;
+}
+
+.col-75 {
+  float: left;
+  width: 75%;
+  margin-top: 6px;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 600px) {
+  .col-25, .col-75, input[type=submit] {
+    width: 100%;
+    margin-top: 0;
+  }
+}
+
+
+#left-bar {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  overflow-y: auto;
+}
+
+  
+</style>
+	</head>
+	<body>
+    
+		<div id="left" >
+
+		</div>
+		<div id="left-bar" >
+      <a href="/">
+        <button type="button" name="create" >Back</button>
+      </a>
+			<br>
+			<br>
+            <div id="editor-container">
+                
+            </div>
+		</div>
+	  
+	</body>
+  <script>
+
+    // builder
+    unlayer.init({
+      id: 'editor-container',
+      projectId: 90324,
+      displayMode: 'email'
+    })
+
+      // exporter
+    unlayer.exportHtml(function(data) {
+      var json = data.design; // design json
+      var html = data.html; // final html
+
+      // Do something with the json and html
+    })
+
+    // helper functions
+
+    function httpGet(theUrl){
+      var xmlHttp = new XMLHttpRequest();
+      xmlHttp.open( "GET", theUrl, false ); // false for synchronous request
+      xmlHttp.send( null );
+      return xmlHttp.responseText;
+    }
+  </script>
+</html>
